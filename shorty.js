@@ -5,7 +5,6 @@ var net     = require('net'),
 try {
     config = JSON.parse(fs.readFileSync('config.json').toString());
     DEBUG = config.debug;
-    console.log(config);
 } catch (ex) {
     util.puts('Error loading config file: ' + ex);
     process.exit(1);
@@ -25,11 +24,15 @@ function shorty(config) {
         self.socket = net.createConnection(self.config.port, self.config.host);
 
         self.socket.on('connect', function() {
-            console.log('Socket connected... Attempting bind...');
+            if ( DEBUG ) { console.log('Socket connected... Attempting bind...'); }
             self.bind();
         });
-        self.socket.on('data', function() {
-            console.log('Incoming data...');
+        self.socket.on('data', function(data) {
+            if ( DEBUG ) { console.log('Incoming data...'); }
+            pdu = self.readPdu(data);
+            if (pdu['command_status'] == 0) {
+                if ( DEBUG ) { console.log('SMPP bind complete...'); }
+            }
         });
     };
 
@@ -47,8 +50,37 @@ function shorty(config) {
 
     self.sendPdu = function(pdu, command_id) {
             header = self.pack('NNNN', pdu.length + 16, command_id, 0, self.sequence_number);
-            console.log(self.socket.write(header+pdu));
+            self.socket.write(header+pdu);
     };
+
+    self.readPdu = function(pdu) {
+            dataStr = pdu.toString('utf8');
+            pdu = {};
+            pdu['length'] = ((dataStr.charCodeAt(0) & 0xFF) << 24) +
+                            ((dataStr.charCodeAt(1) & 0xFF) << 16) +
+                            ((dataStr.charCodeAt(2) & 0xFF) << 8) +
+                            ((dataStr.charCodeAt(3) & 0xFF));
+            pdu['command_id'] = ((dataStr.charCodeAt(4) & 0xFF) << 24) +
+                            ((dataStr.charCodeAt(5) & 0xFF) << 16) +
+                            ((dataStr.charCodeAt(6) & 0xFF) << 8) +
+                            ((dataStr.charCodeAt(7) & 0xFF));
+            pdu['command_status'] = ((dataStr.charCodeAt(8) & 0xFF) << 24) +
+                            ((dataStr.charCodeAt(9) & 0xFF) << 16) +
+                            ((dataStr.charCodeAt(10) & 0xFF) << 8) +
+                            ((dataStr.charCodeAt(11) & 0xFF));
+            pdu['sequence_number'] = ((dataStr.charCodeAt(12) & 0xFF) << 24) +
+                            ((dataStr.charCodeAt(13) & 0xFF) << 16) +
+                            ((dataStr.charCodeAt(14) & 0xFF) << 8) +
+                            ((dataStr.charCodeAt(15) & 0xFF));
+            pdu['body'] = '';
+            if((pdu['length'] - 16) > 0){
+                for (i = 16; i < pdu['length']; i++) {
+                    pdu['body'] += dataStr.charAt(i);
+                }
+            }
+            if ( DEBUG ) { console.log('Parsing PDU...'); console.log(pdu); }
+            return pdu;
+    }
 
     self.pack = function(format) {
         var packed = '';
@@ -136,4 +168,3 @@ function shorty(config) {
         return packed;
     };
 }
-
