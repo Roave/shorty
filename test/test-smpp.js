@@ -25,7 +25,6 @@ exports.testSmpp = function(t) {
     t.expect(1); // expect one assetion for this test
     try {
         config = JSON.parse(fs.readFileSync('config.json').toString());
-        DEBUG = config.debug;
     } catch (ex) {
         console.log('Error loading config file: ' + ex);
         process.exit(1);

@@ -24,7 +24,6 @@ var shorty = require('./lib/shorty'),
 
 try {
     config = JSON.parse(fs.readFileSync('config.json').toString());
-    DEBUG = config.debug;
 } catch (ex) {
     console.log('Error loading config file: ' + ex);
     process.exit(1);
