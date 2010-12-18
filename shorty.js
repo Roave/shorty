@@ -43,6 +43,20 @@ function shorty(config) {
         });
     };
 
+    self.sm_submit = function(from, to, message) {
+        pdu = self.pack(
+                'a1cca' + (from.length + 1) + 'cca' + (to.length + 1) + 'ccca1a1ccccca' + (message.length),
+                "", 0, 0, from,
+                0, 0, to, 0, 0,
+                0, "", "", 0, 0,
+                3, 0,
+                message.length.toString(),
+                message.toString()
+        );
+
+        self.sendPdu(pdu, 0x00000004);
+    }
+
     self.bind = function() {
             pdu = self.pack(
                     'a' + (self.config.system_id.length + 1) +
