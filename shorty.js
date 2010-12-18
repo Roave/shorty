@@ -1,6 +1,7 @@
 #!/usr/local/bin/node
 var net     = require('net'),
-    fs      = require('fs');
+    fs      = require('fs'),
+    sys     = require('sys');
 
 try {
     config = JSON.parse(fs.readFileSync('config.json').toString());
@@ -30,8 +31,14 @@ function shorty(config) {
         self.socket.on('data', function(data) {
             if ( DEBUG ) { console.log('Incoming data...'); }
             pdu = self.readPdu(data);
+
             if (pdu['command_status'] == 0) {
                 if ( DEBUG ) { console.log('SMPP bind complete...'); }
+            }
+
+            if (pdu['command_id'] == 0x000000015) {
+                if ( DEBUG ) { console.log('enquire_link_resp sent'); }
+                self.enquire_link_resp();
             }
         });
     };
@@ -48,9 +55,18 @@ function shorty(config) {
             self.sendPdu(pdu, 0x00000009);
     };
 
+    self.enquire_link_resp = function() {
+        self.sendHeader(0x80000015);
+    };
+
+    self.sendHeader = function(command_id) {
+        header = self.pack('NNNN', 16, command_id, 0, self.sequence_number);
+        self.socket.write(header, 'binary');
+    };
+
     self.sendPdu = function(pdu, command_id) {
             header = self.pack('NNNN', pdu.length + 16, command_id, 0, self.sequence_number);
-            self.socket.write(header+pdu);
+            self.socket.write(header+pdu, 'binary');
     };
 
     self.readPdu = function(pdu) {
