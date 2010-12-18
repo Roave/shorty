@@ -112,10 +112,22 @@ function shorty(config) {
     self.sm_submit = function(from, to, message) {
         pdu = self.pack(
                 'a1cca' + (from.length + 1) + 'cca' + (to.length + 1) + 'ccca1a1ccccca' + (message.length),
-                "", 0, 0, from,
-                0, 0, to, 0, 0,
-                0, "", "", 0, 0,
-                3, 0,
+                "",     //service_type
+                0,      //source_addr_ton
+                0,      //source_addr_npi
+                from,   //source_addr
+                0,      //dest_addr_ton
+                0,      //dest_addr_npi
+                to,     //destination_addr
+                0,      //esm_class
+                0,      //protocol_id
+                0,      //priority_flag
+                "",     //schedule_delivery_time
+                "",     //validity_period
+                0,      //registered_delivery
+                0,      //replace_if_present_flag
+                3,      //data_coding
+                0,      //sm_default_msg_id
                 message.length.toString(),
                 message.toString()
         );
