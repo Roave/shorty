@@ -104,7 +104,7 @@ function shorty(config) {
                             ((dataStr.charCodeAt(15) & 0xFF));
             pdu['body'] = '';
             if((pdu['length'] - 16) > 0){
-                for (i = 16; i < pdu['length']; i++) {
+                for (i = 16; i < pdu['length'] - 1; i++) {
                     pdu['body'] += dataStr.charAt(i);
                 }
             }
