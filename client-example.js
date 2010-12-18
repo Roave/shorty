@@ -17,17 +17,9 @@
  * @category   shorty
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPL
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
- * @package    smpp
+ * @package    examples
  */
-var shorty = require('./lib/shorty'),
-    fs     = require('fs');
+var shorty = require('./lib/shorty');
 
-try {
-    config = JSON.parse(fs.readFileSync('config.json').toString());
-} catch (ex) {
-    console.log('Error loading config file: ' + ex);
-    process.exit(1);
-}
-
-shortyClient = shorty.createClient(config);
+shortyClient = shorty.createClient('config.json');
 shortyClient.connect();

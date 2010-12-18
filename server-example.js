@@ -1,3 +1,4 @@
+#!/usr/local/bin/node
 /**
  * This file is part of Shorty.
  *
@@ -16,13 +17,9 @@
  * @category   shorty
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPL
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
- * @package    tests
+ * @package    examples
  */
-var smpp = require('../lib/smpp'),
-    fs     = require('fs');
+var shorty = require('./lib/shorty');
 
-exports.testSmpp = function(t) {
-    t.expect(1); // expect one assetion for this test
-    t.ok(smpp.commands['generic_nack'] == 0x80000000, "Testing that the commands dictionary was built");
-    t.done();
-}
+shortyServer = shorty.createServer('config.json');
+shortyServer.start();
