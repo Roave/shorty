@@ -1,0 +1,27 @@
+{
+    "name": "shorty",
+    "description": "An asynchronous SMPP client and server built on Node.js.",
+    "version": "0.0.1",
+    "maintainers": [
+        {
+            "name": "Evan Coury",
+            "web": "https://github.com/EvanDotPro"
+        }
+    ],
+    "contributors": [
+        {
+            "name" "Ben Youngblood",
+            "web": "https://github.com/byoungblood"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/EvanDotPro/shorty.git"
+    },
+    "licenses": [
+        {
+            "type": "GPLv3",
+            "url": "http://www.gnu.org/licenses/gpl.html"
+        }
+    ]
+}
