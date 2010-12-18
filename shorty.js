@@ -88,17 +88,22 @@ function shorty(config) {
             if ( DEBUG ) { console.log('Incoming data...'); }
             pdu = self.readPdu(data);
 
-            if (pdu['command_status'] == 0) {
-                if ( DEBUG ) { console.log('SMPP bind complete...'); }
-            }
+            self.sequence_number = pdu['sequence_number'];
 
-            if (pdu['command_id'] == 0x000000015) {
-                if ( DEBUG ) { console.log('enquire_link_resp sent'); }
-                self.enquire_link_resp();
+            switch (pdu['command_id']) {
+                case 0x00000015:
+                    if (DEBUG) { console.log('enquire_link_resp sent; seq: ' + self.sequence_number); }
+                    self.enquire_link_resp();
+                    break;
+                default:
+                    break;
             }
         });
     };
 
+    /**
+     * @todo sm_submit needs to send a unique sequence number
+     */
     self.sm_submit = function(from, to, message) {
         pdu = self.pack(
                 'a1cca' + (from.length + 1) + 'cca' + (to.length + 1) + 'ccca1a1ccccca' + (message.length),
