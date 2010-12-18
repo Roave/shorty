@@ -40,6 +40,42 @@ function shorty(config) {
     self.socket = {};
     self.sequence_number = 1;
 
+    self.commands = {};                               // Use commands to look up by command name
+    self.command_ids = {                              // Use command_ids to look up by ID
+        0x80000000: 'generic_nack',
+        0x00000001: 'bind_receiver',
+        0x80000001: 'bind_receiver_resp',
+        0x00000002: 'bind_transmitter',
+        0x80000002: 'bind_transmitter_resp',
+        0x00000003: 'query_sm',
+        0x80000003: 'query_sm_resp',
+        0x00000004: 'submit_sm',
+        0x80000004: 'submit_sm_resp',
+        0x00000005: 'deliver_sm',
+        0x80000005: 'deliver_sm_resp',
+        0x00000006: 'unbind',
+        0x80000006: 'unbind_resp',
+        0x00000007: 'replace_sm',
+        0x80000007: 'replace_sm_resp',
+        0x00000008: 'cancel_sm',
+        0x80000008: 'cancel_sm_resp',
+        0x00000009: 'bind_transceiver',
+        0x80000009: 'bind_transceiver_resp',
+        0x0000000B: 'outbind',
+        0x00000015: 'enquire_link',
+        0x80000015: 'enquire_link_resp',
+        0x00000021: 'submit_multi',
+        0x80000021: 'submit_multi_resp',
+        0x00000102: 'alert_notification',
+        0x00000103: 'data_sm',
+        0x80000103: 'data_sm_resp'
+    };
+
+    // Reverse coomand_ids into commands so we can have easy lookup either way!
+    for (var command_id in self.command_ids) {
+        self.commands[ self.command_ids[command_id] ] = command_id;
+    }
+
     self.connect = function() {
         if ( DEBUG ) { console.log('Connecting to tcp://'+self.config.host+':'+self.config.port); }
         self.socket = net.createConnection(self.config.port, self.config.host);
@@ -124,7 +160,7 @@ function shorty(config) {
                             ((dataStr.charCodeAt(15) & 0xFF));
             pdu['body'] = '';
             if((pdu['length'] - 16) > 0){
-                for (i = 16; i < pdu['length']; i++) {
+                for (i = 16; i < pdu['length'] - 1; i++) {
                     pdu['body'] += dataStr.charAt(i);
                 }
             }
