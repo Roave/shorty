@@ -54,7 +54,7 @@ function shorty(config) {
     };
 
     self.readPdu = function(pdu) {
-            dataStr = pdu.toString('utf8');
+            dataStr = pdu.toString('binary');
             pdu = {};
             pdu['length'] = ((dataStr.charCodeAt(0) & 0xFF) << 24) +
                             ((dataStr.charCodeAt(1) & 0xFF) << 16) +
