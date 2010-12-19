@@ -22,7 +22,10 @@ var smpp = require('../lib/smpp'),
     fs     = require('fs');
 
 exports.testSmpp = function(t) {
-    t.expect(1); // expect one assetion for this test
+    t.expect(2);
     t.ok(smpp.commands['generic_nack'] == 0x80000000, "Testing that the commands dictionary was built");
+    myBuffer = smpp.createBuffer('test');
+    // This could probably be tested better to test the case that didn't work without creating the buffer byte-for-byte
+    t.ok(myBuffer.toString('ascii') == 'test', "Testing that smpp.createBuffer behaves properly");
     t.done();
 }
