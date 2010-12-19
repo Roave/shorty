@@ -18,11 +18,10 @@
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
  * @package    tests
  */
-var smpp = require('../lib/smpp'),
-    fs     = require('fs');
+var smpp = require('../lib/smpp');
 
-exports.testSmpp = function(t) {
-    t.expect(1);
-    t.ok(smpp.commands['generic_nack'] == 0x80000000, "Testing that the commands dictionary was built");
+exports.testDictionary = function(t) {
+    t.ok(smpp.commands['generic_nack'] == 0x80000000, "commands dictionary");
+    t.ok(smpp.command_ids[0x80000000] == "generic_nack", "commands dictionary");
     t.done();
 }

@@ -18,18 +18,28 @@
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
  * @package    tests
  */
-var pdu    = require('../lib/models/pdu'),
-    smpp   = require('../lib/smpp');
+var smpp   = require('../lib/smpp');
+    pdu    = require('../lib/models/pdu'),
 
 exports.testPduModel = function(t) {
     myPdu = smpp.deliver_sm_resp(1);
     t.ok(myPdu.command_id == 0x80000005, "PDU command_id");
+    t.ok(myPdu.sequence_number == 1, "PDU sequence_number");
+    t.ok(myPdu.pdu_body.length == 1, "PDU body length");
+
+    // Convert the PDU to a Buffer object and test the length
     buffer = myPdu.toBuffer();
     t.ok(buffer.length == 17, "PDU buffer length");
-    myPdu2 = pdu.fromBuffer(buffer);
-    t.ok(myPdu2.command_id == 0x80000005, "PDU command_id after converting to/from buffer");
-    myBuffer = pdu.createBuffer('test');
+
+    // Now convert it back, and re-test the pdu object
+    myPdu = pdu.fromBuffer(buffer);
+    t.ok(myPdu.command_id == 0x80000005, "PDU command_id");
+    t.ok(myPdu.sequence_number == 1, "PDU sequence_number");
+    t.ok(myPdu.pdu_body.length == 1, "PDU body length");
+
     // This could probably be tested better to test the case that didn't work without creating the buffer byte-for-byte
+    myBuffer = pdu.createBuffer('test');
     t.ok(myBuffer.toString('ascii') == 'test', "Testing that pdu.createBuffer behaves properly");
+
     t.done();
 }
