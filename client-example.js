@@ -23,3 +23,13 @@ var shorty = require('./lib/shorty');
 
 shortyClient = shorty.createClient('config.json');
 shortyClient.connect();
+
+// example bind success callback
+shortyClient.on('bind_success', function() {
+    console.log('bind success callback fired');
+});
+
+// example incoming message callback
+shortyClient.on('incoming', function(message) {
+    console.log('incoming message callback fired');
+});
