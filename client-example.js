@@ -19,6 +19,8 @@
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
  * @package    examples
  */
+
+var sys = require('sys');
 var shorty = require('./lib/shorty');
 
 shortyClient = shorty.createClient('config.json');
@@ -38,3 +40,26 @@ shortyClient.on('incoming', function(message) {
 });
 
 shortyClient.connect();
+
+// open stdin
+var stdin = process.openStdin();
+
+// called every time the user writes a line on stdin
+stdin.on('data', function(chunk) {
+    // buffer to a string
+    line = chunk.toString();
+
+    // remove the newline at the end
+    line = line.substr(0, line.length - 1);
+
+    // split by spaces
+    parts = line.split(" ");
+
+    // put the message back together
+    message = "";
+    for (i = 2; i < parts.length; i++) {
+        message += parts[i] + " ";
+    }
+
+    shortyClient.sendMessage(parts[0], parts[1], message);
+});
