@@ -22,4 +22,10 @@
 var shorty = require('./lib/shorty');
 
 shortyServer = shorty.createServer('config.json');
+
+// all clientOn event handlers must be set up before calling shortyServer.start()
+shortyServer.clientOn('bind_request', function(username, password, system_type) {
+   console.log('bind_request callback fired');
+});
+
 shortyServer.start();
