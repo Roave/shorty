@@ -20,7 +20,8 @@
  * @package    examples
  */
 
-var shorty = require('./lib/shorty');
+var shorty = require('./lib/shorty'),
+    sys    = require('sys');
 
 shortyServer = shorty.createServer('config.json');
 
@@ -31,7 +32,16 @@ process.on('uncaughtException', function(err) {
 
 // all clientOn event handlers must be set up before calling shortyServer.start()
 shortyServer.clientOn('bind_request', function(username, password, system_type) {
-   console.log('bind_request callback fired');
+    console.log('bind_request callback fired');
+    return true;
+});
+
+shortyServer.clientOn('delivery', function(mySms) {
+    console.log("sms marked as delivered: " + mySms.user_ref);
+});
+
+shortyServer.clientOn('incoming', function(mySms) {
+    console.log(sys.inspect(mySms));
 });
 
 shortyServer.start();
