@@ -19,6 +19,7 @@
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
  * @package    examples
  */
+
 var shorty = require('./lib/shorty');
 
 shortyServer = shorty.createServer('config.json');

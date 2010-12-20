@@ -18,6 +18,7 @@
  * @copyright  Copyright 2010 Evan Coury (http://www.Evan.pro/)
  * @package    tests
  */
+
 var smpp   = require('../lib/smpp');
     pdu    = require('../lib/models/pdu'),
 
