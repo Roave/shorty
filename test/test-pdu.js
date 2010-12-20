@@ -43,4 +43,14 @@ exports.testPduModel = function(t) {
     t.ok(myBuffer.toString('ascii') == 'test', "Testing that pdu.createBuffer behaves properly");
 
     t.done();
-}
+};
+
+exports.testPduHeaderChange = function(t) {
+    // This is to make sure that changing details in the pdu update the buffer that comes out
+    myPdu = pdu.createPdu(smpp.commands.deliver_sm, 1, "\0");
+    buffer1 = myPdu.toBuffer();
+    myPdu.command_id = smpp.commands.deliver_sm_resp;
+    buffer2 = myPdu.toBuffer();
+    t.ok(buffer1.toString() !== buffer2.toString(), "Making sure the buffer output changes on update");
+    t.done();
+};
