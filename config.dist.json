@@ -9,7 +9,8 @@
         "version":      3.4,
         "addr_ton":     0,
         "addr_npi":     1,
-        "addr_range":   ""
+        "addr_range":   "",
+        "timeout":      30
     },
     "debug":    true
 }
