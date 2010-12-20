@@ -34,6 +34,3 @@ shortyServer.clientOn('bind_request', function(username, password, system_type) 
 });
 
 shortyServer.start();
-shortyServer.clientOn('bind_request', function(username, password, system_type) {
-   console.log('bind_request callback fired');
-});
