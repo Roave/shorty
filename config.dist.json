@@ -10,7 +10,8 @@
         "addr_ton":     0,
         "addr_npi":     1,
         "addr_range":   "",
-        "timeout":      30
+        "timeout":      30,
+        "strict":       1
     },
     "debug":    true
 }
