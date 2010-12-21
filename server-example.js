@@ -36,7 +36,8 @@ shortyServer.clientOn('delivery', function(mySms) {
 });
 
 shortyServer.clientOn('incoming', function(mySms) {
-    console.log(sys.inspect(mySms));
+    //console.log(sys.inspect(mySms));
+    console.log(mySms.sequence_number);
 });
 
 shortyServer.start();
