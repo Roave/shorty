@@ -27,13 +27,12 @@ shortyClient = shorty.createClient('config.json');
 
 shortyClient.on('sent', function (mySms) {
     console.log('sms marked as sent: ' + mySms.user_ref);
-    console.log(sys.inspect(shortyClient.sms_sent.length));
 });
 
 // example bind success callback
 shortyClient.on('bind_success', function() {
     console.log('bind success callback fired');
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 100000; i++) {
         shortyClient.sendMessage("15551231234", "15553214321", "message " + i, i);
     }
     setTimeout(printx, 4000);
