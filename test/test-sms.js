@@ -32,7 +32,7 @@ exports.testSmsModel = function(t) {
     myBuffer = myPdu.toBuffer();
     t.ok(myBuffer.length == 67, "Testing buffer length");
     // now convert the buffer back to a pdu object
-    myPdu = pdu.fromBuffer(myBuffer);
+    myPdu = pdu.individualPduFromBuffer(myBuffer);
     // now convert the pdu back to an sms object and test it
     mySms = sms.fromPdu(myPdu);
     t.ok(mySms.sender == '11234567890', "Properties in sms model properly set");

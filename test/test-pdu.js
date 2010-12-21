@@ -33,7 +33,7 @@ exports.testPduModel = function(t) {
     t.ok(buffer.length == 17, "PDU buffer length");
 
     // Now convert it back, and re-test the pdu object
-    myPdu = pdu.fromBuffer(buffer);
+    myPdu = pdu.individualPduFromBuffer(buffer);
     t.ok(myPdu.command_id == 0x80000005, "PDU command_id");
     t.ok(myPdu.sequence_number == 1, "PDU sequence_number");
     t.ok(myPdu.pdu_body.length == 1, "PDU body length");
