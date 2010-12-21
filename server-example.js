@@ -25,11 +25,6 @@ var shorty = require('./lib/shorty'),
 
 shortyServer = shorty.createServer('config.json');
 
-process.on('uncaughtException', function(err) {
-    console.log('Caught exception: ' + err);
-    process.exit(1);
-});
-
 // all clientOn event handlers must be set up before calling shortyServer.start()
 shortyServer.clientOn('bind_request', function(username, password, system_type) {
     console.log('bind_request callback fired');
