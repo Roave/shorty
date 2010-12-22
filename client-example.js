@@ -20,8 +20,10 @@
  * @package    examples
  */
 
-var sys = require('sys');
-var shorty = require('./lib/shorty');
+var shorty = require('./lib/shorty'),
+    sms    = require('./lib/models/sms'),
+    sys    = require('sys');
+
 
 shortyClient = shorty.createClient('config.json');
 
@@ -61,5 +63,5 @@ stdin.on('data', function(chunk) {
         message += parts[i] + " ";
     }
 
-    shortyClient.sendMessage(parts[0], parts[1], message);
+    shortyClient.sendMessage(sms.create(parts[0], parts[1], message));
 });
