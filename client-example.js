@@ -32,20 +32,12 @@ shortyClient.on('sent', function (mySms) {
 // example bind success callback
 shortyClient.on('bind_success', function() {
     console.log('bind success callback fired');
-    for (var i = 0; i < 100000; i++) {
-        shortyClient.sendMessage("15551231234", "15553214321", "message " + i, i);
-    }
-    setTimeout(printx, 4000);
 });
 
 // example incoming message callback
 shortyClient.on('incoming', function(message) {
     console.log('incoming message callback fired');
 });
-
-var printx = function() {
-    console.log(shortyClient.x);
-}
 
 shortyClient.connect();
 
