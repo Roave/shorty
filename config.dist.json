@@ -11,6 +11,7 @@
         "addr_npi":     1,
         "addr_range":   "",
         "timeout":      30,
+        "client_keepalive":  false,
         "strict":       1
     },
     "debug":    true
