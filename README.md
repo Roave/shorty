@@ -5,7 +5,7 @@ Version 0.0.1 Created by Evan Coury
 
 Introduction
 ------------
-Shorty is a lightweight, high performance SMPP client and server built on Node.js.
+Shorty is a lightweight, high performance SMPP client and server built on Node.js. Shorty is sponsored and maintained by [SMS Cloud](http://www.smscloud.com/), a subsidiary of MediaTech Designs, LLC.
 
 License
 -------
