@@ -1,6 +1,6 @@
 Shorty - SMPP Client / Server
 ================================
-Version 0.0.1 Created by Evan Coury
+Version 0.1.0 Created by Evan Coury
 
 
 Introduction
