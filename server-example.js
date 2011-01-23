@@ -35,7 +35,7 @@ shortyServer.clientOn('delivery', function(mySms) {
     console.log("sms marked as delivered: " + mySms.user_ref);
 });
 
-shortyServer.clientOn('incoming', function(mySms) {
+shortyServer.clientOn('receiveOutgoing', function(mySms) {
     console.log(sys.inspect(mySms));
 });
 
