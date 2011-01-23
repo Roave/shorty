@@ -1,7 +1,7 @@
 {
     "name": "shorty",
     "description": "An asynchronous SMPP client and server built on Node.js.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "directories": { "lib": "./lib" },
     "main" : "./lib/shorty",
     "maintainers": [
@@ -23,7 +23,7 @@
     "licenses": [
         {
             "type": "GPLv3",
-            "url": "http://www.gnu.org/licenses/gpl.html"
+            "url": "http://www.gnu.org/licenses/gpl-3.0.txt"
         }
     ]
 }
