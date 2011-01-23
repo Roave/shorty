@@ -31,6 +31,10 @@ shortyClient.on('sendSuccess', function (id) {
     console.log('sms marked as sent: ' + id);
 });
 
+shortyClient.on('sendFailure', function (id) {
+    console.log('sms failed (rejected by smsc): ' + id);
+});
+
 // example bind success callback
 shortyClient.on('bindSuccess', function() {
     console.log('bind success callback fired');
