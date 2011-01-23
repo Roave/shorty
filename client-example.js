@@ -27,12 +27,12 @@ var shorty = require('./lib/shorty'),
 
 shortyClient = shorty.createClient('config.json');
 
-shortyClient.on('sent', function (mySms) {
+shortyClient.on('sendSuccess', function (mySms) {
     console.log('sms marked as sent: ' + mySms.user_ref);
 });
 
 // example bind success callback
-shortyClient.on('bind_success', function() {
+shortyClient.on('bindSuccess', function() {
     console.log('bind success callback fired');
 });
 
