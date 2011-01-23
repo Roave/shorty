@@ -26,12 +26,12 @@ var shorty = require('./lib/shorty'),
 shortyServer = shorty.createServer('config.json');
 
 // all clientOn event handlers must be set up before calling shortyServer.start()
-shortyServer.clientOn('bind_request', function(username, password, system_type, bind_type) {
+shortyServer.clientOn('bindRequest', function(username, password, system_type, bind_type) {
     console.log('bind_request ('+bind_type+') callback fired');
     return true;
 });
 
-shortyServer.clientOn('delivery', function(mySms) {
+shortyServer.clientOn('deliverySuccess', function(mySms) {
     console.log("sms marked as delivered: " + mySms.user_ref);
 });
 
