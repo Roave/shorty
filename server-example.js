@@ -35,8 +35,15 @@ shortyServer.clientOn('deliverySuccess', function(mySms) {
     console.log("sms marked as delivered: " + mySms.user_ref);
 });
 
-shortyServer.clientOn('receiveOutgoing', function(mySms) {
+shortyServer.clientOn('receiveOutgoing', function(mySms, responseCallback) {
     console.log(sys.inspect(mySms));
+    if (mySms.sender == "15555551234") {
+        // indicate failure
+        responseCallback(mySms, false);
+    } else {
+        // indicate success
+        responseCallback(mySms, true);
+    }
 });
 
 shortyServer.start();
