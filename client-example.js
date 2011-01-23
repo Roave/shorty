@@ -41,7 +41,7 @@ shortyClient.on('bindSuccess', function() {
 });
 
 // example incoming message callback
-shortyClient.on('incoming', function(message) {
+shortyClient.on('incomingMessage', function(message) {
     console.log('incoming message callback fired');
 });
 
