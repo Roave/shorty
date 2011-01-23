@@ -12,7 +12,8 @@ Usage
 Easy method: `npm install shorty`
 
 Once you have Shorty installed, all you have to do is `require('shorty')` to get
-started.
+started. There is documentation below, but the best way to see how everything
+works is to look at **`client-example.js`** and **`server-example.js`**.
 
 ### Client (ESME) ###
 Client implementations are pretty straightforward. `shortyClient =
@@ -28,7 +29,7 @@ recipientNumber, message)`. At this time, Shorty does not support messages
 greater than 160 characters. The return value will be an ID assigned by
 shorty, which will be unique for the SMPP session.
 
-+ bindSuccess: fired when the client is successfull bound to the SMSC. **No SMPP
++ bindSuccess(): fired when the client is successfull bound to the SMSC. **No SMPP
   commands should be sent before this callback is fired.**
 + sendSuccess(id): fired when a message sent with sendMessage() is acknowledged
   with no errors by the SMSC.
