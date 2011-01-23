@@ -21,7 +21,6 @@
  */
 
 var shorty = require('./lib/shorty'),
-    sms    = require('./lib/models/sms'),
     sys    = require('sys');
 
 
@@ -41,7 +40,7 @@ shortyClient.on('bindSuccess', function() {
 });
 
 // example incoming message callback
-shortyClient.on('incomingMessage', function(message) {
+shortyClient.on('incomingMessage', function(sender, recipient, message) {
     console.log('incoming message callback fired');
 });
 
@@ -67,5 +66,5 @@ stdin.on('data', function(chunk) {
         message += parts[i] + " ";
     }
 
-    var id = shortyClient.sendMessage(sms.create(parts[0], parts[1], message));
+    var id = shortyClient.sendMessage(parts[0], parts[1], message);
 });
