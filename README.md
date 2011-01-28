@@ -11,6 +11,10 @@ Usage
 -----
 Easy method: `npm install shorty`
 
+To install the current dev release, just clone the repository, navigate to the source
+folder and do `npm install .`. Keep in mind that releases that aren't tagged with a
+version are typically unstable and should not be used in a production environment.
+
 Once you have Shorty installed, all you have to do is `require('shorty')` to get
 started. There is documentation below, but the best way to see how everything
 works is to look at **`client-example.js`** and **`server-example.js`**.
