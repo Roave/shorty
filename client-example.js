@@ -44,6 +44,10 @@ shortyClient.on('incomingMessage', function(sender, recipient, message) {
     console.log('incoming message callback fired');
 });
 
+shortyClient.on('disconnect', function() {
+    console.log('disconnect');
+});
+
 shortyClient.connect();
 
 // open stdin
