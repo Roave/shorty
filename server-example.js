@@ -47,3 +47,15 @@ shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCal
 });
 
 shortyServer.start();
+
+var sighandle = function() {
+    shortyServer.stop();
+    process.exit();
+};
+
+process.on('SIGHUP', sighandle);
+process.on('SIGINT', sighandle);
+process.on('SIGQUIT', sighandle);
+process.on('SIGKILL', sighandle);
+process.on('SIGTERM', sighandle);
+process.on('SIGSTOP', sighandle); 

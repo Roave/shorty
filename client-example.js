@@ -50,11 +50,8 @@ shortyClient.on('disconnect', function() {
 
 shortyClient.connect();
 
-// open stdin
-var stdin = process.openStdin();
-
 // called every time the user writes a line on stdin
-stdin.on('data', function(chunk) {
+process.stdin.on('data', function(chunk) {
     // buffer to a string
     var line = chunk.toString();
 
@@ -72,3 +69,16 @@ stdin.on('data', function(chunk) {
 
     var id = shortyClient.sendMessage(parts[0], parts[1], message);
 });
+
+var sighandle = function() {
+    process.stdin.end();
+    shortyClient.unbind();
+    process.exit();
+};
+
+process.on('SIGHUP', sighandle);
+process.on('SIGINT', sighandle);
+process.on('SIGQUIT', sighandle);
+process.on('SIGKILL', sighandle);
+process.on('SIGTERM', sighandle);
+process.on('SIGSTOP', sighandle); 
