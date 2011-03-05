@@ -26,9 +26,8 @@ var shorty = require('./lib/shorty'),
 shortyServer = shorty.createServer('config.json');
 
 // all clientOn event handlers must be set up before calling shortyServer.start()
-shortyServer.clientOn('bindRequest', function(username, password, system_type, bind_type) {
-    console.log('bind_request ('+bind_type+') callback fired');
-    return true;
+shortyServer.clientOn('bindRequest', function(client, callback) {
+    callback(true);
 });
 
 shortyServer.clientOn('deliverySuccess', function(mySms) {
@@ -47,6 +46,27 @@ shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCal
 });
 
 shortyServer.start();
+
+process.openStdin();
+// called every time the user writes a line on stdin
+process.stdin.on('data', function(chunk) {
+    // buffer to a string
+    var line = chunk.toString();
+
+    // remove the newline at the end
+    line = line.substr(0, line.length - 1);
+
+    // split by spaces
+    var parts = line.split(" ");
+
+    // put the message back together
+    var message = "";
+    for (i = 2; i < parts.length; i++) {
+        message += parts[i] + " ";
+    }
+
+    var id = shortyServer.deliverMessage('SHORTY', parts[0], parts[1], message);
+});
 
 var sighandle = function() {
     shortyServer.stop();

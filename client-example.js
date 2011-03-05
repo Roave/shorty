@@ -50,6 +50,7 @@ shortyClient.on('disconnect', function() {
 
 shortyClient.connect();
 
+process.openStdin();
 // called every time the user writes a line on stdin
 process.stdin.on('data', function(chunk) {
     // buffer to a string
