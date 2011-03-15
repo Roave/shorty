@@ -1,4 +1,5 @@
 .gitignore
 config.json
+config-client.json
 client-example.js
 server-example.js
