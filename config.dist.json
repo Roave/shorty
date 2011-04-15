@@ -12,6 +12,7 @@
         "addr_range":   "",
         "timeout":      30,
         "client_keepalive":  false,
+        "client_reconnect_interval": 2500,
         "strict":       1
     },
     "debug":    true
