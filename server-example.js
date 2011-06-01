@@ -23,6 +23,8 @@
 var shorty = require('./lib/shorty'),
     sys    = require('sys');
 
+var messageId = 0;
+
 shortyServer = shorty.createServer('config.json');
 
 // all clientOn event handlers must be set up before calling shortyServer.start()
@@ -38,10 +40,10 @@ shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCal
     console.log(sys.inspect(mySms));
     if (mySms.sender == "15555551234") {
         // indicate failure
-        responseCallback(mySms, false);
+        responseCallback(mySms, false, messageId++);
     } else {
         // indicate success
-        responseCallback(mySms, true);
+        responseCallback(mySms, true, messageId++);
     }
 });
 
