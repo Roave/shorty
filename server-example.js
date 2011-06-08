@@ -25,7 +25,7 @@ var shorty = require('./lib/shorty'),
 
 var messageId = 0;
 
-shortyServer = shorty.createServer('config.json');
+var shortyServer = shorty.createServer('config.json');
 
 // all clientOn event handlers must be set up before calling shortyServer.start()
 shortyServer.clientOn('bindRequest', function(client, callback) {
@@ -38,7 +38,9 @@ shortyServer.clientOn('deliverySuccess', function(mySms) {
 
 shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCallback) {
     console.log(sys.inspect(mySms));
-    if (mySms.sender == "15555551234") {
+
+    // Any messages sent from this number will fail
+    if (mySms.sender === "15555551234") {
         // indicate failure
         responseCallback(mySms, false, messageId++);
     } else {
@@ -52,22 +54,24 @@ shortyServer.start();
 process.openStdin();
 // called every time the user writes a line on stdin
 process.stdin.on('data', function(chunk) {
+    var line, parts, message, i, id;
+
     // buffer to a string
-    var line = chunk.toString();
+    line = chunk.toString();
 
     // remove the newline at the end
     line = line.substr(0, line.length - 1);
 
     // split by spaces
-    var parts = line.split(" ");
+    parts = line.split(" ");
 
     // put the message back together
-    var message = "";
+    message = "";
     for (i = 2; i < parts.length; i++) {
         message += parts[i] + " ";
     }
 
-    var id = shortyServer.deliverMessage('SHORTY', parts[0], parts[1], message);
+    id = shortyServer.deliverMessage('SHORTY', parts[0], parts[1], message);
 });
 
 var sighandle = function() {

@@ -24,7 +24,7 @@ var shorty = require('./lib/shorty'),
     sys    = require('sys');
 
 
-shortyClient = shorty.createClient('config.json');
+var shortyClient = shorty.createClient('config.json');
 
 shortyClient.on('sendSuccess', function (id) {
     console.log('sms marked as sent: ' + id);
@@ -53,22 +53,24 @@ shortyClient.connect();
 process.openStdin();
 // called every time the user writes a line on stdin
 process.stdin.on('data', function(chunk) {
+    var line, parts, i, message, id;
+
     // buffer to a string
-    var line = chunk.toString();
+    line = chunk.toString();
 
     // remove the newline at the end
     line = line.substr(0, line.length - 1);
 
     // split by spaces
-    var parts = line.split(" ");
+    parts = line.split(" ");
 
     // put the message back together
-    var message = "";
+    message = "";
     for (i = 2; i < parts.length; i++) {
         message += parts[i] + " ";
     }
 
-    var id = shortyClient.sendMessage(parts[0], parts[1], message);
+    id = shortyClient.sendMessage(parts[0], parts[1], message);
 });
 
 var sighandle = function() {
