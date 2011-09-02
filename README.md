@@ -1,12 +1,25 @@
 Shorty - SMPP Client / Server
 ================================
-Version 0.3.0 Created by Evan Coury and Ben Youngblood
+Version 0.3.1-b1 Created by Evan Coury and Ben Youngblood
 
+**Warning**: this branch is not currently compatible with vanilla Node.js v0.4.x
+and is not at all compatible with v0.5.x. There is currently a
+[pull request](https://github.com/joyent/node/pull/987) open for a necessary
+feature, but it has not been merged yet. In order to use this branch of Shorty
+on Node.js v0.4.11, you should follow these steps:
+
+1. `git clone https://github.com/joyent/node.git`
+2. `git checkout v0.4.5`
+3. Download [the patch](https://gist.github.com/962953)
+4. `git am /path/to/patchfile.diff`
+5. `git checkout -b bind-local-address`
+6. `git merge v0.4.11`
+7. Compile and install Node.js as usual (`./configure && make install`)
 
 Introduction
 ------------
 Shorty is a lightweight, high performance SMPP client and server built on Node.js 
-(tested on v0.2.8, v0.4.0, and v0.4.1). Shorty is sponsored and maintained by 
+(tested on v0.2.8, v0.4.0, and v0.4.x). Shorty is sponsored and maintained by 
 [SMS Cloud](http://www.smscloud.com/), a subsidiary of MediaTech Designs, LLC.
 
 Requirements
