@@ -10,7 +10,7 @@ on Node.js v0.4.11, you should follow these steps:
 
 1. `git clone https://github.com/joyent/node.git`
 2. `git checkout v0.4.5`
-3. Download [the patch](https://gist.github.com/962953)
+3. Download [the patch](https://gist.github.com/9476d3d2fc4fbf61a878)
 4. `git am /path/to/patchfile.diff`
 5. `git checkout -b bind-local-address`
 6. `git merge v0.4.11`
