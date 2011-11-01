@@ -22,12 +22,6 @@ Shorty is a lightweight, high performance SMPP client and server built on Node.j
 (tested on v0.2.8, v0.4.0, and v0.4.x). Shorty is sponsored and maintained by 
 [SMS Cloud](http://www.smscloud.com/), a subsidiary of MediaTech Designs, LLC.
 
-Requirements
-------------
-Currently, Shorty requires the node-iconv library in order to support conversion
-from UCS-2 to UTF-8. This package is available in npm using `npm install iconv`
-or on [Github](https://github.com/bnoordhuis/node-iconv).
-
 Usage
 -----
 Easy method: `npm install shorty`
