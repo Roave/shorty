@@ -70,7 +70,7 @@ process.stdin.on('data', function(chunk) {
         message += parts[i] + " ";
     }
 
-    id = shortyClient.sendMessage(parts[0], parts[1], message);
+    id = shortyClient.sendMessage(parts[0], parts[1], message, {source_addr_ton:0x01,dest_addr_ton:0x01});
 });
 
 var sighandle = function() {
