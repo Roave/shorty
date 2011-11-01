@@ -13,7 +13,6 @@
         "timeout":      30,
         "client_keepalive":  false,
         "client_reconnect_interval": 2500,
-        "convert_to_ucs2" : false,
         "strict":       1
     },
     "debug":    true
