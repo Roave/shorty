@@ -21,7 +21,7 @@
  */
 
 var shorty = require('./lib/shorty'),
-    sys    = require('sys');
+    sys    = require('util');
 
 
 var shortyClient = shorty.createClient('config.json');
