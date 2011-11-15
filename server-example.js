@@ -27,16 +27,16 @@ var messageId = 0;
 
 var shortyServer = shorty.createServer('config.json');
 
-// all clientOn event handlers must be set up before calling shortyServer.start()
-shortyServer.clientOn('bindRequest', function(client, callback) {
-    callback(true);
+// all event handlers must be set up before calling shortyServer.start()
+shortyServer.on('bind', function(client, callback) {
+    callback("ESME_ROK");
 });
 
-shortyServer.clientOn('deliverySuccess', function(mySms) {
+shortyServer.on('deliverySuccess', function(mySms) {
     console.log("sms marked as delivered: " + mySms.user_ref);
 });
 
-shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCallback) {
+shortyServer.on('receiveOutgoing', function(mySms, clientData, responseCallback) {
     console.log(sys.inspect(mySms));
 
     // Any messages sent from this number will fail
