@@ -21,7 +21,7 @@
  */
 
 var shorty = require('./lib/shorty'),
-    sys    = require('sys');
+    util   = require('util');
 
 var messageId = 0;
 
@@ -32,20 +32,36 @@ shortyServer.on('bind', function(client, callback) {
     callback("ESME_ROK");
 });
 
-shortyServer.on('deliverySuccess', function(mySms) {
-    console.log("sms marked as delivered: " + mySms.user_ref);
+shortyServer.on('bindSuccess', function(client, pdu) {
+    console.log('bind success');
 });
 
-shortyServer.on('receiveOutgoing', function(mySms, clientData, responseCallback) {
-    console.log(sys.inspect(mySms));
+shortyServer.on('deliver_sm_resp', function(client, pdu) {
+    console.log("sms marked as delivered: " + pdu.sequence_number);
+});
+
+shortyServer.on('unbind', function(client, pdu) {
+    console.log("client unbinding");
+});
+
+shortyServer.on('unbind_resp', function(client, pdu) {
+    console.log("client unbound");
+});
+
+// client info, pdu info, callback(messageId, status)
+shortyServer.on('submit_sm', function(clientInfo, pdu, callback) {
+    var source = pdu.source_addr.toString('ascii'),
+        dest = pdu.destination_addr.toString('ascii');
+
+    console.log(pdu.short_message.toString('ascii'));
 
     // Any messages sent from this number will fail
-    if (mySms.sender === "15555551234") {
+    if (pdu.sender === "15555551234") {
         // indicate failure
-        responseCallback(mySms, false, messageId++);
+        callback("ESME_RSUBMITFAIL", messageId++);
     } else {
         // indicate success
-        responseCallback(mySms, true, messageId++);
+        callback("ESME_ROK", messageId++);
     }
 });
 

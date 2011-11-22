@@ -26,8 +26,8 @@ var shorty = require('./lib/shorty'),
 
 var shortyClient = shorty.createClient('config.json');
 
-shortyClient.on('sendSuccess', function (id) {
-    console.log('sms marked as sent: ' + id);
+shortyClient.on('submit_sm_resp', function (pdu) {
+    console.log('sms marked as sent: ' + pdu.sequence_number);
 });
 
 shortyClient.on('sendFailure', function (id) {
@@ -35,20 +35,33 @@ shortyClient.on('sendFailure', function (id) {
 });
 
 // example bind success callback
-shortyClient.on('bindSuccess', function() {
-    console.log('bind success callback fired');
+shortyClient.on('bindSuccess', function(pdu) {
+    console.log('bind successful');
 });
 
-// example incoming message callback
-shortyClient.on('incomingMessage', function(sender, recipient, message) {
-    console.log('incoming message callback fired');
+shortyClient.on('bindFailure', function(pdu) {
+    console.log('bind failed');
+});
+
+shortyClient.on('unbind', function(pdu) {
+    console.log('unbinding from server');
+});
+
+shortyClient.on('unbind_resp', function(pdu) {
+    console.log('unbind confirmed');
 });
 
 shortyClient.on('disconnect', function() {
-    console.log('disconnect');
+    console.log('disconnected');
+});
+
+// example incoming message callback
+shortyClient.on('deliver_sm', function(pdu) {
+    console.log('incoming message callback fired');
 });
 
 shortyClient.connect();
+
 
 process.openStdin();
 // called every time the user writes a line on stdin
@@ -70,7 +83,14 @@ process.stdin.on('data', function(chunk) {
         message += parts[i] + " ";
     }
 
-    id = shortyClient.sendMessage(parts[0], parts[1], message, {source_addr_ton:0x01,dest_addr_ton:0x01});
+    id = shortyClient.sendMessage({
+       souce_addr_ton: 0x01,
+       source_addr: parts[0],
+       dest_addr_ton: 0x01,
+       destination_addr: parts[1],
+       data_coding: 0x03,
+       short_message: message
+    });
 });
 
 var sighandle = function() {
