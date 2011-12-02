@@ -36,7 +36,7 @@ if (cluster.isMaster) {
 } else {
     var shortyServer = shorty.createServer('config.json');
 
-    shortyServer.on('bind', function(client, callback) {
+    shortyServer.on('bind', function(client, pdu, callback) {
         callback("ESME_ROK");
     });
 
