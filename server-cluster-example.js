@@ -36,17 +36,21 @@ if (cluster.isMaster) {
 } else {
     var shortyServer = shorty.createServer('config.json');
 
-    // all clientOn event handlers must be set up before calling shortyServer.start()
-    shortyServer.clientOn('bindRequest', function(client, callback) {
-        callback(true);
+    shortyServer.on('bind', function(client, callback) {
+        callback("ESME_ROK");
     });
 
-    shortyServer.clientOn('deliverySuccess', function(mySms) {
-        console.log("sms marked as delivered: " + mySms.user_ref);
+    shortyServer.on('bindSuccess', function(client, pdu) {
+        console.log(client.config.system_id + ' bound to pid ' + process.pid);
     });
 
-    shortyServer.clientOn('receiveOutgoing', function(mySms, clientData, responseCallback) {
+    shortyServer.on('deliver_sm_resp', function(client, pdu) {
+        console.log("sms marked as delivered: " + pdu.sequence_number);
+    });
+
+    shortyServer.on('submit_sm', function(client, pdu) {
         console.log(mySms.sender + ' -> ' + mySms.recipient + ': ' + mySms.message);
+        console.log("submit_sm from " + client.config.system_id);
 
         // Any messages sent from this number will fail
         if (mySms.sender === "15555551234") {
