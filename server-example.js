@@ -87,7 +87,12 @@ process.stdin.on('data', function(chunk) {
         message += parts[i] + " ";
     }
 
-    id = shortyServer.deliverMessage('SHORTY', parts[0], parts[1], message);
+    id = shortyServer.deliverMessage('SMSCLOUD', {
+        'source_addr': parts[0],
+        'destination_addr': parts[1],
+        'sm_length': Buffer.byteLength(message),
+        'short_message': new Buffer(message)
+    });
 });
 
 var sighandle = function() {
