@@ -28,7 +28,7 @@ var messageId = 0;
 var shortyServer = shorty.createServer('config.json');
 
 // all event handlers must be set up before calling shortyServer.start()
-shortyServer.on('bind', function(client, callback) {
+shortyServer.on('bind', function(pdu, client, callback) {
     callback("ESME_ROK");
 });
 
