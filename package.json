@@ -1,7 +1,7 @@
 {
     "name": "shorty",
     "description": "An asynchronous SMPP client and server built on Node.js.",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "directories": { "lib": "./lib" },
     "main" : "./lib/shorty",
     "maintainers": [
