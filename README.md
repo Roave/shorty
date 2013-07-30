@@ -7,7 +7,7 @@ Introduction
 ------------
 Shorty is a lightweight, high performance SMPP client and server built on Node.js 
 (v0.6.x). Shorty is sponsored and maintained by 
-[SMS Cloud](http://www.smscloud.com/), a subsidiary of MediaTech Designs, LLC.
+[SMS Cloud](http://www.smscloud.com/), a subsidiary of Roave.
 
 Usage
 -----
