@@ -1,13 +1,17 @@
 {
     "name": "shorty",
     "description": "An asynchronous SMPP client and server built on Node.js.",
-    "version": "0.5.4",
+    "version": "0.5.5",
     "directories": { "lib": "./lib" },
     "main" : "./lib/shorty",
     "maintainers": [
         {
             "name": "Evan Coury",
             "web": "https://github.com/EvanDotPro"
+        },
+        {
+            "name": "Justin Martin",
+            "web": "https://github.com/TheFrozenFire"
         }
     ],
     "contributors": [
@@ -18,7 +22,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/mtd/shorty.git"
+        "url": "https://github.com/roave/shorty.git"
     },
     "licenses": [
         {
