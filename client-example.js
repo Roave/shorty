@@ -152,12 +152,6 @@ process.stdin.on('data', function(chunk) {
 var sighandle = function() {
     process.stdin.end();
     shortyClient.unbind();
-    process.exit();
 };
 
-process.on('SIGHUP', sighandle);
-process.on('SIGINT', sighandle);
-process.on('SIGQUIT', sighandle);
-process.on('SIGKILL', sighandle);
-process.on('SIGTERM', sighandle);
-process.on('SIGSTOP', sighandle); 
+process.on('exit', sighandle);
