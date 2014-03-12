@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
 /**
  * This file is part of Shorty.
  *
@@ -97,7 +97,7 @@ shortyClient.on('disconnect', function() {
  * (https://github.com/bnoordhuis/node-iconv).
  */
 shortyClient.on('deliver_sm', function(pdu) {
-    console.log('incoming message callback fired');
+    console.log(pdu.source_addr.toString('utf8') + ' ' + pdu.destination_addr.toString('utf8') + ' ' + pdu.short_message.toString('utf8'));
 });
 
 /**
