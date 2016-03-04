@@ -1,7 +1,7 @@
 {
   "smpp": [
     {
-      "mode": "transceiver",
+      "mode": "transmitter",
       "host": "127.0.0.1",
       "port": 2775,
       "system_id": "username",
