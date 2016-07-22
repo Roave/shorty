@@ -34,5 +34,8 @@
       "name": "Ben Youngblood",
       "url": "https://github.com/bjyoungblood"
     }
-  ]
+  ],
+  "engines": {
+    "node": "^6.0"
+  }
 }
