@@ -1,7 +1,3 @@
 .gitignore
-config.json
-config-client.json
-client-example.js
-server-example.js
-server-cluster-example.js
+examples/
 test
