@@ -1,33 +1,38 @@
 {
-    "name": "shorty",
-    "description": "An asynchronous SMPP client and server built on Node.js.",
-    "version": "0.5.5",
-    "directories": { "lib": "./lib" },
-    "main" : "./lib/shorty",
-    "maintainers": [
-        {
-            "name": "Evan Coury",
-            "web": "https://github.com/EvanDotPro"
-        },
-        {
-            "name": "Justin Martin",
-            "web": "https://github.com/TheFrozenFire"
-        }
-    ],
-    "contributors": [
-        {
-            "name": "Ben Youngblood",
-            "web": "https://github.com/bjyoungblood"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/roave/shorty.git"
-    },
-    "licenses": [
-        {
-            "type": "GPLv3",
-            "url": "http://www.gnu.org/licenses/gpl-3.0.txt"
-        }
-    ]
+  "name": "shorty",
+  "version": "0.5.5",
+  "description": "An asynchronous SMPP client and server built on Node.js.",
+  "keywords": [
+    "smpp",
+    "sms"
+  ],
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Roave/shorty.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Roave/shorty/issues"
+  },
+  "directories": {
+    "example": "./examples",
+    "lib": "./lib"
+  },
+  "main": "./lib/shorty",
+  "author": {
+    "name": "Evan Coury",
+    "url": "https://github.com/EvanDotPro"
+  },
+  "maintainers": [
+    {
+      "name": "Justin Martin",
+      "url": "https://github.com/TheFrozenFire"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Ben Youngblood",
+      "url": "https://github.com/bjyoungblood"
+    }
+  ]
 }
