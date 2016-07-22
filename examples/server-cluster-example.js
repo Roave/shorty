@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
 /**
  * This file is part of Shorty.
  *
@@ -20,7 +20,7 @@
  * @package    examples
  */
 
-var shorty  = require('./lib/shorty'),
+var shorty = require('../'),
     util    = require('util'),
     cluster = require('cluster'),
     numCPUs = require('os').cpus().length;

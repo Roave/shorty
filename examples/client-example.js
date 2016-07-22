@@ -20,7 +20,7 @@
  * @package    examples
  */
 
-var shorty = require('./lib/shorty'),
+var shorty = require('../'),
     sys    = require('util');
 
 
