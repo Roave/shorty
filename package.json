@@ -37,5 +37,24 @@
   ],
   "engines": {
     "node": "^6.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.1.1",
+    "mocha": "^2.5.3",
+    "nyc": "^7.0.0"
+  },
+  "scripts": {
+    "lint": "eslint lib/ test/",
+    "test": "npm run-script lint -s && npm run-script test-cov -s",
+    "test-cov": "nyc mocha --bail --check-leaks test/"
+  },
+  "nyc": {
+    "all": true,
+    "include": ["lib/**/*.js"],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ]
   }
 }
