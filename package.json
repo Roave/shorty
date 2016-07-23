@@ -44,7 +44,7 @@
     "nyc": "^7.0.0"
   },
   "scripts": {
-    "lint": "eslint lib/ test/",
+    "lint": "eslint lib/ test/ examples/",
     "test": "npm run-script lint -s && npm run-script test-cov -s",
     "test-cov": "nyc mocha --bail --check-leaks test/"
   },

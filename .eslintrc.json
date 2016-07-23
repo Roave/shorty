@@ -125,7 +125,7 @@
     ],
     "max-len": [
       2,
-      100,
+      120,
       2,
       {
         "ignoreUrls": true,
@@ -297,7 +297,7 @@
     "no-new-wrappers": 2,
     "no-octal-escape": 2,
     "no-param-reassign": [
-      2,
+      0,
       {
         "props": true
       }
@@ -306,7 +306,7 @@
     "no-restricted-syntax": [
       2,
       "DebuggerStatement",
-      "ForInStatement",
+      //"ForInStatement",
       "LabeledStatement",
       "WithStatement"
     ],
