@@ -344,7 +344,7 @@
       2,
       "always"
     ],
-    "no-console": 1,
+    "no-console": 0,
     "no-constant-condition": 1,
     "no-empty": 2,
     "no-inner-declarations": 2,
@@ -394,7 +394,7 @@
       "never"
     ],
     "consistent-this": 0,
-    "func-names": 1,
+    "func-names": 0,
     "func-style": 0,
     "id-length": 0,
     "jsx-quotes": 0,
