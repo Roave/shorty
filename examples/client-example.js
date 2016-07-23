@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint no-unused-vars: 0 */
 /**
  * This file is part of Shorty.
  *
@@ -20,25 +21,25 @@
  * @package    examples
  */
 
-var shorty = require('../'),
-    sys    = require('util');
+'use strict';
 
+const shorty = require('../');
 
 /**
  * Create the shorty client object.
- * 
+ *
  * Alternatively, you could read in your own config file, then pass in an object
  * with properties matching the one in config.dist.json instead of a filename
  */
-var shortyClient = shorty.createClient('config.json');
+const shortyClient = shorty.createClient('config.json');
 
 /**
  * The submit_sm_resp is emitted when the server sends a submit_sm_resp in
  * response to a submit_sm. It is not aware of status or any error codes. It's
  * up to the application to figure out what to do with those.
  */
-shortyClient.on('submit_sm_resp', function (pdu) {
-    console.log('sms marked as sent: ' + pdu.sequence_number);
+shortyClient.on('submit_sm_resp', pdu => {
+    console.log(`sms marked as sent: ${pdu.sequence_number}`);
 });
 
 /**
@@ -46,7 +47,7 @@ shortyClient.on('submit_sm_resp', function (pdu) {
  * ESME_ROK status. It is not until this event is emitted that a client can be
  * considered to be properly bound to an SMPP server.
  */
-shortyClient.on('bindSuccess', function(pdu) {
+shortyClient.on('bindSuccess', pdu => {
     console.log('bind successful');
 });
 
@@ -56,7 +57,7 @@ shortyClient.on('bindSuccess', function(pdu) {
  * unaware of the reasons for failure. It is up to the application to read the
  * status code from the returned pdu object and determine the problem.
  */
-shortyClient.on('bindFailure', function(pdu) {
+shortyClient.on('bindFailure', pdu => {
     console.log('bind failed');
 });
 
@@ -65,7 +66,7 @@ shortyClient.on('bindFailure', function(pdu) {
  * client unbind. Currently, shorty will automatically comply with any unbind
  * requests and send an unbind_resp.
  */
-shortyClient.on('unbind', function(pdu) {
+shortyClient.on('unbind', pdu => {
     console.log('unbinding from server');
 });
 
@@ -73,7 +74,7 @@ shortyClient.on('unbind', function(pdu) {
  * This event is emitted when the server sends an unbind_resp, acknowledging
  * that the client's unbind command.
  */
-shortyClient.on('unbind_resp', function(pdu) {
+shortyClient.on('unbind_resp', pdu => {
     console.log('unbind confirmed');
 });
 
@@ -82,7 +83,7 @@ shortyClient.on('unbind_resp', function(pdu) {
  * disconnected from the server. This will always happen after an unbind, but
  * can also happen after certain errors.
  */
-shortyClient.on('disconnect', function() {
+shortyClient.on('disconnect', () => {
     console.log('disconnected');
 });
 
@@ -96,8 +97,9 @@ shortyClient.on('disconnect', function() {
  * support the encoding specified, the node-iconv library can be very helpful
  * (https://github.com/bnoordhuis/node-iconv).
  */
-shortyClient.on('deliver_sm', function(pdu) {
-    console.log(pdu.source_addr.toString('utf8') + ' ' + pdu.destination_addr.toString('utf8') + ' ' + pdu.short_message.toString('utf8'));
+shortyClient.on('deliver_sm', pdu => {
+    console.log(`${pdu.source_addr.toString('utf8')} ${pdu.destination_addr.toString('utf8')} \
+${pdu.short_message.toString('utf8')}`);
 });
 
 /**
@@ -109,8 +111,9 @@ shortyClient.connect();
 process.openStdin();
 
 // called every time the user writes a line on stdin
-process.stdin.on('data', function(chunk) {
-    var line, parts, i, message, id;
+process.stdin.on('data', chunk => {
+    let line;
+    let message;
 
     // buffer to a string
     line = chunk.toString();
@@ -119,12 +122,12 @@ process.stdin.on('data', function(chunk) {
     line = line.substr(0, line.length - 1);
 
     // split by spaces
-    parts = line.split(" ");
+    const parts = line.split(" ");
 
     // put the message back together
     message = "";
-    for (i = 2; i < parts.length; i++) {
-        message += parts[i] + " ";
+    for (let i = 2; i < parts.length; i++) {
+        message += `${parts[i]} `;
     }
 
     /**
@@ -137,21 +140,21 @@ process.stdin.on('data', function(chunk) {
      * 2. a list of optional SMPP fields (again, named as they are in the spec).
      *      Shorty does not add any optional fields by default.
      */
-    id = shortyClient.sendMessage({
-       souce_addr_ton: 0x01,
-       source_addr: parts[0],
-       dest_addr_ton: 0x01,
-       destination_addr: parts[1],
-       data_coding: 0x03,
-       short_message: message
+    const id = shortyClient.sendMessage({
+        souce_addr_ton: 0x01,
+        source_addr: parts[0],
+        dest_addr_ton: 0x01,
+        destination_addr: parts[1],
+        data_coding: 0x03,
+        short_message: message,
     }, {
-        user_message_reference: 102
+        user_message_reference: 102,
     });
 });
 
-var sighandle = function() {
+function sighandle() {
     process.stdin.end();
     shortyClient.unbind();
-};
+}
 
 process.on('exit', sighandle);

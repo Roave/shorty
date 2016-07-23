@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/* eslint-disable */
+/* eslint no-unused-vars: 0 */
 /**
  * This file is part of Shorty.
  *
@@ -20,37 +22,40 @@
  * @package    examples
  */
 
-var shorty = require('../'),
-    util    = require('util'),
-    cluster = require('cluster'),
-    numCPUs = require('os').cpus().length;
+'use strict';
 
+const shorty = require('../');
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+let messageId = 0;
+
+// @TODO fix this example
 if (cluster.isMaster) {
-    for (var i = 0; i < numCPUs; i++) {
+    for (let i = 0; i < numCPUs; i++) {
         cluster.fork();
     }
 
-    cluster.on('death', function(worker) {
+    cluster.on('death', worker => {
         console.log('worker ' + worker.pid + ' died');
     });
 } else {
-    var shortyServer = shorty.createServer('config.json');
+    const shortyServer = shorty.createServer('config.json');
 
-    shortyServer.on('bind', function(client, pdu, callback) {
+    shortyServer.on('bind', (client, pdu, callback) => {
         callback("ESME_ROK");
     });
 
-    shortyServer.on('bindSuccess', function(client, pdu) {
-        console.log(client.config.system_id + ' bound to pid ' + process.pid);
+    shortyServer.on('bindSuccess', (client, pdu) => {
+        console.log(`${client.config.system_id} bound to pid ${process.pid}`);
     });
 
-    shortyServer.on('deliver_sm_resp', function(client, pdu) {
-        console.log("sms marked as delivered: " + pdu.sequence_number);
+    shortyServer.on('deliver_sm_resp', (client, pdu) => {
+        console.log(`sms marked as delivered: ${pdu.sequence_number}`);
     });
 
-    shortyServer.on('submit_sm', function(client, pdu) {
-        console.log(mySms.sender + ' -> ' + mySms.recipient + ': ' + mySms.message);
-        console.log("submit_sm from " + client.config.system_id);
+    shortyServer.on('submit_sm', (client, pdu) => {
+        console.log(`${mySms.sender} -> ${mySms.recipient}: ${mySms.message}`);
+        console.log(`submit_sm from ${client.config.system_id}`);
 
         // Any messages sent from this number will fail
         if (mySms.sender === "15555551234") {

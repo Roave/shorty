@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint no-unused-vars: 0 */
 /**
  * This file is part of Shorty.
  *
@@ -20,39 +21,35 @@
  * @package    examples
  */
 
-var shorty = require('../'),
-    util   = require('util');
+'use strict';
 
-var messageId = 0;
-
-var shortyServer = shorty.createServer('config.json');
+const shorty = require('../');
+const shortyServer = shorty.createServer('config.json');
+let messageId = 0;
 
 // all event handlers must be set up before calling shortyServer.start()
-shortyServer.on('bind', function(pdu, client, callback) {
+shortyServer.on('bind', (pdu, client, callback) => {
     callback("ESME_ROK");
 });
 
-shortyServer.on('bindSuccess', function(client, pdu) {
+shortyServer.on('bindSuccess', (client, pdu) => {
     console.log('bind success');
 });
 
-shortyServer.on('deliver_sm_resp', function(client, pdu) {
-    console.log("sms marked as delivered: " + pdu.sequence_number);
+shortyServer.on('deliver_sm_resp', (client, pdu) => {
+    console.log(`sms marked as delivered: ${pdu.sequence_number}`);
 });
 
-shortyServer.on('unbind', function(client, pdu) {
+shortyServer.on('unbind', (client, pdu) => {
     console.log("client unbinding");
 });
 
-shortyServer.on('unbind_resp', function(client, pdu) {
+shortyServer.on('unbind_resp', (client, pdu) => {
     console.log("client unbound");
 });
 
 // client info, pdu info, callback(messageId, status)
-shortyServer.on('submit_sm', function(clientInfo, pdu, callback) {
-    var source = pdu.source_addr.toString('ascii'),
-        dest = pdu.destination_addr.toString('ascii');
-
+shortyServer.on('submit_sm', (clientInfo, pdu, callback) => {
     console.log(pdu.short_message.toString('ascii'));
 
     // Any messages sent from this number will fail
@@ -69,8 +66,9 @@ shortyServer.start();
 
 process.openStdin();
 // called every time the user writes a line on stdin
-process.stdin.on('data', function(chunk) {
-    var line, parts, message, i, id;
+process.stdin.on('data', chunk => {
+    let line;
+    let message;
 
     // buffer to a string
     line = chunk.toString();
@@ -79,24 +77,24 @@ process.stdin.on('data', function(chunk) {
     line = line.substr(0, line.length - 1);
 
     // split by spaces
-    parts = line.split(" ");
+    const parts = line.split(" ");
 
     // put the message back together
     message = "";
-    for (i = 2; i < parts.length; i++) {
-        message += parts[i] + " ";
+    for (let i = 2; i < parts.length; i++) {
+        message += `${parts[i]} `;
     }
 
-    id = shortyServer.deliverMessage('SMSCLOUD', {
-        'source_addr': parts[0],
-        'destination_addr': parts[1],
-        'sm_length': Buffer.byteLength(message),
-        'short_message': new Buffer(message)
+    const id = shortyServer.deliverMessage('SMSCLOUD', {
+        source_addr: parts[0],
+        destination_addr: parts[1],
+        sm_length: Buffer.byteLength(message),
+        short_message: new Buffer(message),
     });
 });
 
-var sighandle = function() {
+function sighandle() {
     shortyServer.stop();
-};
+}
 
 process.on('exit', sighandle);
