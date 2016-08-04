@@ -39,6 +39,7 @@
     "node": "^6.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.1.1",
     "mocha": "^2.5.3",
     "nyc": "^7.0.0"
@@ -50,7 +51,9 @@
   },
   "nyc": {
     "all": true,
-    "include": ["lib/**/*.js"],
+    "include": [
+      "lib/**/*.js"
+    ],
     "reporter": [
       "lcov",
       "text",

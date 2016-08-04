@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- Transform streams to encode and decode PDUs to and from binary form using
+  common object mode stream api
 
 ### Changed
 
@@ -18,7 +19,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- data-handler helper function replaced with transform streams.
 
 ### Fixed
 
