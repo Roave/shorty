@@ -1,6 +1,5 @@
 'use strict';
 
-const expect = require('chai').expect;
 const describe = require('mocha').describe;
 const it = require('mocha').it;
 // const Protocol = require('../lib/protocol');

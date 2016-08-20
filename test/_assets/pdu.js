@@ -60,7 +60,6 @@ module.exports = class {
             fields: {},
             optional_params: {},
         };
-
     }
 
     static get enquireLinkResp() {
