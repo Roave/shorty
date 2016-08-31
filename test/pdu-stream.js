@@ -54,6 +54,39 @@ describe('PDU transform streams', () => {
                 stream.write(pduBuffer.slice(14));
             });
         });
+
+        it('Should not intercept exception thrown by onData listeners', (done) => {
+            const pduWriter = new PduWriter(smppDefs);
+            const pduBuffer = pduWriter.write(testPdus.bindTransceiver);
+            const pduParserMock = {
+                count: 0,
+                parse() {
+                    return {};
+                },
+            };
+            const stream = new PduParsingStream({ parseSuppressError: true }, pduParserMock);
+
+            // for sync or async error
+            const origListeners = process.listeners('uncaughtException');
+            process.removeAllListeners('uncaughtException');
+            process.once('uncaughtException', (err) => {
+                if (err.message === 'test') {
+                    done();
+                }
+            });
+            stream.on('data', () => {
+                // restore listeners
+                setImmediate(() => origListeners.forEach((listener) => process.on('uncaughtException', listener)));
+                throw new Error('test');
+            });
+            try {
+                stream.write(pduBuffer);
+            } catch (err) {
+                if (err.message === 'test') {
+                    done();
+                }
+            }
+        });
     });
 
     describe('Serializing stream', () => {
